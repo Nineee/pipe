@@ -1,7 +1,7 @@
 <p align = "center">
-<img alt="Pipe" src="https://user-images.githubusercontent.com/873584/52321153-3d6d6900-2a0e-11e9-9ea6-57974a302dbf.png">
+<img alt="Pipe" src="https://static.b3log.org/images/brand/pipe-128.png">
 <br><br>
-小而美的博客平台，为未来而构建
+Small and beautiful blogging platform, built for the future
 <br><br>
 <a title="Build Status" target="_blank" href="https://travis-ci.org/88250/pipe"><img src="https://img.shields.io/travis/88250/pipe.svg?style=flat-square"></a>
 <a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/88250/pipe"><img src="https://goreportcard.com/badge/github.com/88250/pipe?style=flat-square"></a>
@@ -25,21 +25,151 @@
 <a title="Author GitHub Followers" target="_blank" href="https://github.com/88250"><img src="https://img.shields.io/github/followers/88250.svg?label=Followers&style=social"></a>
 </p>
 
-* [B3log 构思 - 分布式社区网络](https://hacpai.com/article/1546941897596)
-* [Pipe 用户指南](https://hacpai.com/article/1513761942333)
-* [Pipe 开发指南](https://hacpai.com/article/1533965022328)
-* [Pipe 主题开发指南](https://hacpai.com/article/1512550354920)
+<p align="center">
+<a href="https://hacpai.com/article/1513761942333">中文</a>
+</p>
 
-欢迎关注 B3log 开源社区微信公众号 `B3log开源`：
+## 💡 Introduction
 
-![image-d3c00d78](https://user-images.githubusercontent.com/873584/71566370-0d312c00-2af2-11ea-8ea1-0d45d6f0db20.png)
+[Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://hacpai.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://hacpai.com/article/1546941897596)).
 
-![start](https://user-images.githubusercontent.com/970828/71305910-71c6f980-2415-11ea-9ce1-657517a7858a.png)
+> This is a brand new online community experience, so that you who love recording and sharing no longer feel lonely!
 
-![console](https://user-images.githubusercontent.com/873584/56882183-7826f080-6a95-11e9-92ab-447c8f05c1ac.png)
+Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to learn more.
 
-![post](https://user-images.githubusercontent.com/873584/56882187-78bf8700-6a95-11e9-9147-822df8a32ffc.png)
+## 🗃 Showcases
 
-![theme](https://user-images.githubusercontent.com/873584/56882189-78bf8700-6a95-11e9-8b63-ab1f3a8b9a21.png)
+* http://vanessa.b3log.org
+* http://blog.bhusk.com
+* https://www.zorkelvll.cn
+* http://o0o.pub
+* http://blog.gitor.org
 
-![gina](https://user-images.githubusercontent.com/873584/56882185-7826f080-6a95-11e9-9809-79a6eaaf784c.png)
+## ✨ Features
+
+* Multi-user blog platform
+* [Markdown editor](https://github.com/Vanessa219/vditor) supports three editing modes: WYSIWYG/Instant Rendering/Split View
+* Tag aggregation classification
+* Custom navigation links
+* Multiple themes / multiple languages
+* Atom / RSS / Sitemap
+* Article search
+* Hexo/Jekyll import / export
+* CDN static resource separation
+* Support SQLite / MySQL / PostgreSQL
+
+## 🎨 Screenshots
+
+### Start
+
+![start.png](https://img.hacpai.com/file/2020/04/start-7fb7b415.png)
+
+### Console
+
+![console.png](https://img.hacpai.com/file/2020/04/console-047922de.png)
+
+### Post
+
+![post.png](https://img.hacpai.com/file/2020/04/post-f52cbd5c.png)
+
+### Theme
+
+![theme.png](https://img.hacpai.com/file/2020/04/theme-d2799005.png)
+
+### Theme Gina
+
+![gina.png](https://img.hacpai.com/file/2020/04/gina-d7fe2313.png)
+
+## 🛠️ Setup
+
+Pipe only supports deployment via Docker. If you need to build from source, please refer to [here](https://hacpai.com/article/1533965022328).
+
+### Docker deploy
+
+Get the latest image: 
+
+```shell
+docker pull b3log/pipe
+```
+
+* Use MySQL
+  First create database schema manually (schema name `pipe`, character set use` utf8mb4`, sorting rule `utf8mb4_general_ci`), and then start the container:
+
+  ```shell
+  docker run --detach --name pipe --network=host \
+      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s" --runtime_mode=prod --port=5897 --server=http://localhost:5897
+  ```
+
+  For simplicity, the host network mode is used to connect to MySQL on the host.
+* Use SQLite
+
+  ```shell
+  docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
+      b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
+  ```
+
+Start command line arguments description:
+
+* `--port`: process listen port
+* `--server`: the URL for the final visiting
+
+The description of the complete startup arguments can be viewed using `-h`.
+
+### Docker upgrade
+
+1. Pull the latest image
+2. Restart the container
+
+You can refer to [here](https://github.com/88250/pipe/blob/master/docker-restart.sh) to write a restart script and run it through crontab every morning to achieve automatic update.
+
+### NGINX reverse proxy
+
+```nginx
+upstream pipe {
+    server localhost:5897;
+}
+
+server {
+    listen 80;
+    server_name pipe.b3log.org; # blog domain
+
+    location / {
+        proxy_pass http://pipe$request_uri;
+        proxy_set_header  Host $host:$server_port;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        client_max_body_size  10m;
+    }
+}
+```
+
+In addition, you can refer to https://hacpai.com/article/1517474627971 for configuration.
+
+## 📜 Documentation
+
+* [Pipe User Guide](https://hacpai.com/article/1513761942333)
+* [Pipe Developer Guide](https://hacpai.com/article/1533965022328)
+* [Pipe Theme Development Guide](https://hacpai.com/article/1512550354920)
+* [Pipe Postman Test Collection](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
+
+## 🏘️ Community
+
+* [Forum](https://hacpai.com/tag/pipe)
+* [Issues](https://github.com/88250/pipe/issues/new/choose)
+
+## 📄 License
+
+Pipe uses the [Mulan Permissive Software License, Version 2](http://license.coscl.org.cn/MulanPSL2) open source license.
+
+## 🙏 Acknowledgement
+
+* [jQuery](https://github.com/jquery/jquery): A JavaScript tool library for theme pages
+* [Vue.js](https://github.com/vuejs/vue): A progressive, incrementally-adoptable JavaScript framework
+* [Nuxt.js](https://github.com/nuxt/nuxt.js): The Vue.js Framework
+* [Vuetify](https://github.com/vanessa219/vuetify): Material Component Framework for Vue
+* [Vditor](https://github.com/Vanessa219/vditor): An In-browser Markdown editor
+* [Gin](https://github.com/gin-gonic/gin): A HTTP web framework written in Go
+* [GORM](https://github.com/jinzhu/gorm): The fantastic ORM library for Golang
+* [SQLite](https://www.sqlite.org): The most used database engine in the world
+* [GCache](https://github.com/bluele/gcache): Cache library for golang
+* [Gulu](https://github.com/88250/gulu): Go commons utilities
+* [Lute](https://github.com/88250/lute): A structured Markdown engine that supports Go and JavaScript

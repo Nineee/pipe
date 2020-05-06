@@ -197,7 +197,9 @@
         return new Vditor(data.id, {
           typewriterMode: true,
           tab: '\t',
-          cache: this.$route.query.id ? false : true,
+          cache: {
+            enable: this.$route.query.id ? false : true,
+          },
           preview: {
             delay: 500,
             mode: data.mode,
@@ -222,7 +224,10 @@
               replace('/\\s/g', ''),
           },
           height: data.height,
-          counter: 102400,
+          counter: {
+            enable: true,
+            max: 102400
+          },
           resize: {
             enable: data.resize,
           },
@@ -436,10 +441,10 @@
           if (!id)
             // set storage
             this._setDefaultLocalStorage()
-            setTimeout(() => {
-              document.querySelector('.input-group__input input').focus()
-            }, 100)
-        }
+          setTimeout(() => {
+            document.querySelector('.input-group__input input').focus()
+          }, 100)
+        },
       })
 
       window.onbeforeunload = (event) => {

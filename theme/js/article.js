@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.6.0.0, Jan 19, 2020
+ * @version 0.7.0.0, Apr 16, 2020
  */
 
 import $ from 'jquery'
@@ -24,7 +24,7 @@ export const InitVcomment = () => {
   const vcomment = new Vcomment({
     id: 'vcomment',
     postId: $vcomment.data('postid'),
-    url: 'https://hacpai.com',
+    url: 'https://ld246.com',
     userName: $vcomment.data('name'),
     currentPage: 1,
     vditor: {
@@ -139,39 +139,51 @@ export const ShowEditor = (reply, id, commentId) => {
     'list',
     'ordered-list',
     'check',
+    'outdent',
+    'indent',
     '|',
     'quote',
     'line',
     'code',
     'inline-code',
     'table',
-    '|',
+    'insert-before',
+    'insert-after',
     'undo',
     'redo',
     '|',
-    'edit-mode',
-    'both',
-    'preview',
-    'format',
-    '|',
     'fullscreen',
-    'devtools',
-    'info',
-    'help',
-  ]
+    'edit-mode',
+    {
+      name: 'more',
+      toolbar: [
+        'both',
+        'code-theme',
+        'content-theme',
+        'export',
+        'outline',
+        'preview',
+        'devtools',
+        'info',
+        'help',
+      ],
+    }]
   let resizeEnable = true
   if ($(window).width() < 768) {
-    toolbar = [
+    toolbar =  [
       'emoji',
-      'bold',
-      'italic',
       'link',
-      'list',
-      'check',
       'edit-mode',
-      'preview',
-      'fullscreen',
-      'help',
+      {
+        name: 'more',
+        toolbar: [
+          'insert-after',
+          'fullscreen',
+          'preview',
+          'info',
+          'help',
+        ],
+      },
     ]
     resizeEnable = false
   }
@@ -199,7 +211,10 @@ export const ShowEditor = (reply, id, commentId) => {
         ParseMarkdown()
       },
     },
-    counter: 2048,
+    counter: {
+      enable: true,
+      max: 2048,
+    },
     resize: {
       enable: resizeEnable,
       position: 'top',

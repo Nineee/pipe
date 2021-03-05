@@ -1,7 +1,18 @@
 {
   "name": "pipe-admin",
-  "version": "1.9.1",
-  "author": "Vanessa <v@b3log.org>",
+  "version": "2.1.0",
+  "author": {
+    "name": "B3log 开源社区",
+    "email": "os@b3log.org",
+    "url": "https://b3log.org"
+  },
+  "maintainers": [
+    {
+      "name": "Liyuan Li",
+      "email": "84588990@qq.com",
+      "url": "http://vanessa.b3log.org"
+    }
+  ],
   "private": true,
   "config": {
     "nuxt": {
@@ -22,8 +33,8 @@
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
-    "uvstat": "^1.0.7",
-    "vditor": "3.0.0",
+    "uvstat": "^1.0.8",
+    "vditor": "3.6.6",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.11.2",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.12"
@@ -40,8 +51,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "node-sass": "^4.13.1",
-    "nuxt": "^2.11.0",
+    "node-sass": "^4.14.1",
+    "nuxt": "^2.14.4",
     "sass-loader": "^7.1.0"
   }
 }

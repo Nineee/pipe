@@ -28,11 +28,11 @@
             <p v-html="$t('about4', $store.state.locale)"></p>
             <p v-html="$t('about3', $store.state.locale)"></p>
             <p>
-              <a href="https://hacpai.com/article/1513761942333" target="_blank" class="about__link btn btn--success">
+              <a href="https://ld246.com/article/1513761942333" target="_blank" class="about__link btn btn--success">
                 <v-icon>file-text</v-icon>
                 {{ $t('doc', $store.state.locale) }}
               </a>
-              <a href="https://hacpai.com/tag/pipe" target="_blank" class="about__link btn btn--success">
+              <a href="https://ld246.com/tag/pipe" target="_blank" class="about__link btn btn--success">
                 <v-icon>hacpai-logo</v-icon>
                 {{ $t('community', $store.state.locale) }}
               </a>
@@ -52,19 +52,19 @@
         <h3>❤️ 欢迎成为我们的赞助者</h3>
       </div>
       <div class="card__body">
-        <a href="https://b3log.org">B3log 开源组织</a>旗下包含
-        <a href="https://sym.b3log.org/">Symphony</a>、
-        <a href="https://solo.b3log.org/">Solo</a>、
-        <a href="https://github.com/88250/pipe">Pipe</a>、
-        <a href="https://github.com/88250/wide">Wide</a>、
-        <a href="https://github.com/88250/latke">Latke</a>、
-        <a href="https://github.com/vanessa219/vditor">Vditor</a>、
-        <a href="https://github.com/88250/gulu">Gulu</a>&nbsp;等一系列开源项目。随着项目规模的增长，我们需要有相应的资金支持才能持续项目的维护和开发。
-        <br/> <br/>
-        如果你觉得 Pipe 还算好用，可通过支付宝对我们进行赞助，谢谢 🙏
+        <a href="https://b3log.org/sym" target="_blank">Symphony</a>、<a
+        href="https://b3log.org/solo" target="_blank">Solo</a>、<a
+        href="https://github.com/88250/pipe" target="_blank">Pipe</a>、<a
+        href="https://github.com/88250/wide" target="_blank">Wide</a>、<a
+        href="https://github.com/88250/latke" target="_blank">Latke</a>、<a
+        href="https://b3log.org/vditor" target="_blank">Vditor</a>、<a
+        href="https://github.com/88250/lute" target="_blank">Lute</a>、<a
+        href="https://github.com/88250/gulu" target="_blank">Gulu</a>、<a
+        href="https://b3log.org/siyuan" target="_blank">思源笔记</a>
+        等一系列开源项目和产品。随着项目规模的增长，我们需要相应的资金支持才能持续维护和开发，请帮助我们！
         <br/> <br/>
         <div class="ft__center">
-          <a class="btn btn--info" href="https://hacpai.com/sponsor">
+          <a class="btn btn--info" href="https://ld246.com/sponsor">
             <svg viewBox="0 0 32 32" width="100%" height="100%"
                  className={classes.svg}>
               <path
@@ -80,7 +80,7 @@
           v-for="item in list"
           :key="item.oId"
           class="fn__flex">
-          <a :href="`https://hacpai.com/member/${item.paymentUserName}`"
+          <a :href="`https://ld246.com/member/${item.paymentUserName}`"
              :aria-label="item.paymentUserName"
              v-if="item.paymentUserName"
              target="_blank"
@@ -93,7 +93,7 @@
             <div class="fn__flex">
               <div class="fn__flex-1">
                 <a v-if="item.paymentUserName" target="_blank"
-                   class="list__title" :href="`https://hacpai.com/member/${item.paymentUserName}`">
+                   class="list__title" :href="`https://ld246.com/member/${item.paymentUserName}`">
                   {{ item.paymentUserName }}
                 </a>
                 <span v-else class="list__title">匿名好心人</span>

@@ -74,7 +74,7 @@ func MarkdownAction(c *gin.Context) {
 }
 
 var uploadTokenCheckTime, uploadTokenTime int64
-var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
+var uploadToken, uploadURL = "", "https://ld246.com/upload/client"
 
 // UploadTokenAction gets a upload token.
 func UploadTokenAction(c *gin.Context) {
@@ -112,7 +112,7 @@ func UploadTokenAction(c *gin.Context) {
 
 	requestResult := gulu.Ret.NewResult()
 	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
-		Post(util.HacPaiURL+"/apis/upload/token").
+		Post(util.CommunityURL+"/apis/upload/token").
 		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	uploadTokenCheckTime = now
 	if nil != errs {

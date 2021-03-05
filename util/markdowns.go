@@ -47,24 +47,22 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	luteEngine := lute.New()
-	unsafe, err := luteEngine.MarkdownStr("", mdText)
-	if nil != err {
-		return &MarkdownResult{
-			ContentHTML:  err.Error(),
-			AbstractText: err.Error(),
-			ThumbURL:     "",
-		}
-	}
-	contentHTML := unsafe
+	contentHTML := luteEngine.MarkdownStr("", mdText)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
+		if Uploaded(src) && !strings.Contains(src, ".gif") && !strings.Contains(src, "imageView") {
+			src += "?imageView2/2/w/1280/format/jpg/interlace/1/q/100"
+		}
 		ele.SetAttr("data-src", src)
 		ele.RemoveAttr("src")
 	})
 
 	contentHTML, _ = doc.Find("body").Html()
-	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
+	contentHTML = bluemonday.UGCPolicy().
+		AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
+		AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("div").
+		AllowAttrs("data-code").OnElements("div").
 		AllowAttrs("data-src").OnElements("img").
 		AllowAttrs("class", "target", "id", "style", "align").Globally().
 		AllowAttrs("src", "width", "height", "border", "marginwidth", "marginheight").OnElements("iframe").
